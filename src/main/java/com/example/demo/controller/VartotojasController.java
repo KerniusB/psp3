@@ -2,14 +2,20 @@ package com.example.demo.controller;
 
 import com.example.demo.model.User;
 import com.example.demo.service.CashRegisterService;
+import com.example.demo.validators.EmailValidator.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+
 @Controller
 public class VartotojasController {
+
+
+    private EmailValidator emailValidator = new EmailValidator();
 
     @Autowired
     private CashRegisterService vartotojasService;
@@ -29,10 +35,12 @@ public class VartotojasController {
 
     @PostMapping("/add-vartotojas")
     public String add(ModelMap model, @ModelAttribute("vartotojas") User vartotojas, BindingResult result) {
-        if (result.hasErrors()) {
+        if (!emailValidator.isValid(vartotojas.getEmail(), Arrays.asList("!"), Arrays.asList("gmail.com"))) {
+            model.addAttribute("errorMessage", "Not valid email input!");
             return "add-vartotojas";
         }
         vartotojasService.add(vartotojas);
+        System.out.println();
         return "redirect:/vartotojas";
     }
 
