@@ -1,7 +1,7 @@
 <%@ include file="common/header.jspf" %>
 <%@ include file="common/navigation.jspf" %>
 <div class="container">
-    <table border="1">
+    <table>
         <thead>
         <tr>
             <th>Id</th>
@@ -30,9 +30,5 @@
 
         </tbody>
     </table>
-
-    <div>
-        <a type="button" href="add-vartotojas">Prideti vartotoja</a>
-    </div>
 </div>
 <%@ include file="common/footer.jspf" %>

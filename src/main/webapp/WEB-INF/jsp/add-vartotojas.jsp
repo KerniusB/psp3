@@ -4,42 +4,42 @@
 <div class="container">
     <form:form method="post" modelAttribute="vartotojas">
         <c:if test="${vartotojas.id == null}">
-            <p>Prideti nauja vartotoja:</p>
+            <p>Add new user:</p>
         </c:if>
         <div>
             <c:if test="${vartotojas.id != null}">
-                <p>Atnaujinti vartotojas su id ${vartotojas.id}:</p>
+                <p>Update user with id: ${vartotojas.id}:</p>
             </c:if>
             <form:input path="id" type="hidden" required="required"/>
             <form:errors path="id"/>
         </div>
         <div>
-            <form:label path="name">Vardas</form:label>
+            <form:label path="name">Name</form:label>
             <form:input path="name" type="text" required="required"/>
             <form:errors path="name"/>
         </div>
         <div>
-            <form:label path="lastName">Pavarde</form:label>
+            <form:label path="lastName">Last name</form:label>
             <form:input path="lastName" type="text" required="required"/>
             <form:errors path="lastName"/>
         </div>
         <div>
-            <form:label path="telNr">Telefono numeris</form:label>
+            <form:label path="telNr">Phone number</form:label>
             <form:input path="telNr" type="text" required="required"/>
             <form:errors path="telNr"/>
         </div>
         <div>
-            <form:label path="email">El. pasto adresas</form:label>
+            <form:label path="email">Email</form:label>
             <form:input path="email" type="text" required="required"/>
             <form:errors path="email"/>
         </div>
         <div>
-            <form:label path="address">Adresas</form:label>
+            <form:label path="address">Address</form:label>
             <form:input path="address" type="text" required="required"/>
             <form:errors path="address"/>
         </div>
         <div>
-            <form:label path="password">Slaptazodis</form:label>
+            <form:label path="password">Password</form:label>
             <form:input path="password" type="password" required="required"/>
             <form:errors path="password"/>
         </div>
