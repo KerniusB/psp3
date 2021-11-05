@@ -1,0 +1,22 @@
+body {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    border: 5px double black;
+}
+
+table {
+    margin: 0 auto;
+    margin-bottom: 10px;
+}
+
+nav {
+    padding-bottom: 10px;
+    border-bottom: 5px double black;
+    margin-bottom: 10px;
+}
+
+form div {
+    margin-top: 1rem;
+}

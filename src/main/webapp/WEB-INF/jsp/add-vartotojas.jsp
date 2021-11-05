@@ -1,4 +1,5 @@
-<%@ include file="commons/header.jspf" %>
+<%@ include file="common/header.jspf" %>
+<%@ include file="common/navigation.jspf" %>
 
 <div class="container">
     <form:form method="post" modelAttribute="vartotojas">
@@ -44,4 +45,11 @@
         </div>
         <button type="submit">OK</button>
     </form:form>
+    <c:if test="${errorMessage != null}">
+        <div>
+            ${errorMessage}
+        </div>
+    </c:if>
 </div>
+
+<%@ include file="common/footer.jspf" %>
