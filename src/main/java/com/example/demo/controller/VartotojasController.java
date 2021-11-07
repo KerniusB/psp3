@@ -3,6 +3,9 @@ package com.example.demo.controller;
 import com.example.demo.model.User;
 import com.example.demo.service.CashRegisterService;
 import com.example.demo.validators.EmailValidator.EmailValidator;
+import com.example.demo.validators.PasswordChecker.Validators.*;
+import com.example.demo.validators.PhoneValidator.PhoneValidator;
+import com.example.demo.validators.PhoneValidator.TelephoneNumberFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -10,12 +13,23 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Controller
 public class VartotojasController {
 
 
     private EmailValidator emailValidator = new EmailValidator();
+    private List<String> forbiddenSymbols = Arrays.asList("!", "?");
+    private List<String> domainAndTLD = Arrays.asList("gmail.com", "yahoo.com");
+
+    private PhoneValidator phoneValidator = new PhoneValidator();
+    private TelephoneNumberFormat tf = new TelephoneNumberFormat(8, "+370", "8");
+
+    private PasswordChecker passwordChecker = new PasswordChecker();
+    private LengthValidator lengthValidator = new LengthValidator(10);
+    private SpecialCharacterValidator specialCharacterValidator = new SpecialCharacterValidator("!?");
+    private UpperCaseValidator upperCaseValidator = new UpperCaseValidator();
 
     @Autowired
     private CashRegisterService vartotojasService;
@@ -35,12 +49,23 @@ public class VartotojasController {
 
     @PostMapping("/add-vartotojas")
     public String add(ModelMap model, @ModelAttribute("vartotojas") User vartotojas, BindingResult result) {
-        if (!emailValidator.isValid(vartotojas.getEmail(), Arrays.asList("!"), Arrays.asList("gmail.com"))) {
+        if (!emailValidator.isValid(vartotojas.getEmail(), forbiddenSymbols, domainAndTLD)) {
             model.addAttribute("errorMessage", "Not valid email input!");
             return "add-vartotojas";
         }
+        phoneValidator.addFormat("LT", tf);
+        if (!phoneValidator.isValid("LT" ,vartotojas.getTelNr())) {
+            model.addAttribute("errorMessage", "Not valid phone input!");
+            return "add-vartotojas";
+        }
+        passwordChecker.addValidator(lengthValidator);
+        passwordChecker.addValidator(specialCharacterValidator);
+        passwordChecker.addValidator(upperCaseValidator);
+        if(!passwordChecker.isValid(vartotojas.getPassword())){
+            model.addAttribute("errorMessage", "Not valid password input!");
+            return "add-vartotojas";
+        }
         vartotojasService.add(vartotojas);
-        System.out.println();
         return "redirect:/vartotojas";
     }
 
@@ -53,6 +78,22 @@ public class VartotojasController {
     @PostMapping("/update-vartotojas/{id}")
     public String update(ModelMap model, @ModelAttribute("vartotojas") User vartotojas, BindingResult result) {
         if (result.hasErrors()) {
+            return "add-vartotojas";
+        }
+        if (!emailValidator.isValid(vartotojas.getEmail(), forbiddenSymbols, domainAndTLD)) {
+            model.addAttribute("errorMessage", "Not valid email input!");
+            return "add-vartotojas";
+        }
+        phoneValidator.addFormat("LT", tf);
+        if (!phoneValidator.isValid("LT", vartotojas.getTelNr())) {
+            model.addAttribute("errorMessage", "Not valid phone input!");
+            return "add-vartotojas";
+        }
+        passwordChecker.addValidator(lengthValidator);
+        passwordChecker.addValidator(specialCharacterValidator);
+        passwordChecker.addValidator(upperCaseValidator);
+        if(!passwordChecker.isValid(vartotojas.getPassword())){
+            model.addAttribute("errorMessage", "Not valid password input!");
             return "add-vartotojas";
         }
         vartotojasService.update(vartotojas);
