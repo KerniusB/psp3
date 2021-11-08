@@ -9,7 +9,22 @@ import org.junit.jupiter.api.Test;
 class UserTest {
 
     @Test
-    void setId() {
+    void testUserConstructor()
+    {
+        User user = new User(1L, "Name", "LastName", "+37061111111", "email@gmail.com", "Address", "Password");
+        assertAll("Test PhoneNumber constructor",
+                () -> assertEquals(1L, user.getId()),
+                () -> assertEquals("Name", user.getName()),
+                () -> assertEquals("LastName", user.getLastName()),
+                () -> assertEquals("+37061111111", user.getTelNr()),
+                () -> assertEquals("email@gmail.com", user.getEmail()),
+                () -> assertEquals("Address", user.getAddress()),
+                () -> assertEquals("Password", user.getPassword())
+        );
+    }
+
+    @Test
+    void setGetId() {
         User user = new User();
         user.setId(1L);
         assertTrue(user.getId().equals(1L));
