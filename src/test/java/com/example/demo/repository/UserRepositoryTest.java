@@ -1,12 +1,10 @@
 package com.example.demo.repository;
 
-import com.example.demo.DemoApplication;
 import com.example.demo.model.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
@@ -19,9 +17,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class CashRegisterRepositoryTest {
+public class UserRepositoryTest {
     @Autowired
-    protected CashRegisterRepository userRepository;
+    protected UserRepository userRepository;
 
     @Test
     public void save()
